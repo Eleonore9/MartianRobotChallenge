@@ -5,6 +5,7 @@ function Grid(size) {
 	this.size = size;
 }
 
+Grid.prototype.scent_pos = new Array;
 
 // define a class for the robots
 function Robot(grid, position, instruction) {
@@ -24,26 +25,29 @@ function Robot(grid, position, instruction) {
 			}
 	};
 
+	this.getOutput = function() {
+		var output = this.position;
+		for(var i = 0; i < this.instruction.length; i++) {
+			output = this.nextPosition(this.instruction[i], output);
+			console.log("i= " + i + " - " + output);
+			if(output.search("LOST") != -1){
+				return output;
+			}
+		} 
+		return output;
+	};
+
 	// this.getOutput = function() {
 	// 	var output = this.position;
 	// 	for(var i = 0; i < this.instruction.length; i++) {
-	// 		output = this.nextPosition(this.instruction[i], output);
-	// 		console.log(i + " " + output);
+	// 		do {
+	// 			output = this.nextPosition(this.instruction[i], output);
+	// 			console.log(i + " " + output);	
+	// 		}while(output.search("LOST") == -1);
 	// 	} 
 	// 	return output;
 	// };
 
-	this.getOutput = function() {
-		var output = this.position;
-		var stop = /LOST/g;
-		for(var i = 0; i < this.instruction.length; i++) {
-			do {
-				output = this.nextPosition(this.instruction[i], output);
-				console.log(i + " " + output);	
-			}while(stop.test(output) == false);
-		} 
-		return output;
-	};
 };
 
 //export those two classes:

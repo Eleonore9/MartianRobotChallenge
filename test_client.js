@@ -9,9 +9,10 @@ client.connect(PORT, HOST, function() {
 
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
 	// Write a message to the socket as soon as the client is connected
-	// client.write('5 3\n1 1 E\nRFRFRFRF');
-	// client.write('5 3\n0 3 W\nLLFFFLFLFL');
-	client.write('5 3\n3 2 N\nFRRFLLFFRRFLL');
+	//client.write('5 3\n1 1 E\nRFRFRFRF'); //expected output "1 1 E"
+	//client.write('5 3\n3 2 N\nFRRFLLFFRRFLL'); //expected output "3 3 N LOST"
+	client.write('5 3\n0 3 W\nLLFFFLFLFL'); //expected output "2 3 S"
+	
 
  
 });
