@@ -9,8 +9,6 @@ var Forward = function(robot_position, mars_size) {
 	switch(robot_position[4]){
 
 		case 'N':
-		console.log("position: " + robot_position);
-		console.log("scent_pos: " + scent.Grid.prototype.scent_pos);
 		
 		//When the robot faces North it increments 'y' by 1	and returns 'LOST' when off the grid
 			if(scent.Grid.prototype.scent_pos.isLost(robot_position)) {
@@ -23,12 +21,9 @@ var Forward = function(robot_position, mars_size) {
 					scent.Grid.prototype.scent_pos.push(robot_position);
 					new_position = robot_position;
 					lost = " LOST";
-					console.log("scent_pos: " + scent.Grid.prototype.scent_pos);
 				}
-				console.log("scent_pos: " + scent.Grid.prototype.scent_pos);
 				return new_position  + lost;
 				break;
-
 			}
 
 			

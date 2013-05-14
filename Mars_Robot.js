@@ -29,7 +29,6 @@ function Robot(grid, position, instruction) {
 		var output = this.position;
 		for(var i = 0; i < this.instruction.length; i++) {
 			output = this.nextPosition(this.instruction[i], output);
-			console.log("i= " + i + " - " + output);
 			if(output.search("LOST") != -1){
 				return output;
 			}

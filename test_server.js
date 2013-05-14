@@ -21,43 +21,44 @@ net.createServer(function(sock) {
 		
 		console.log('DATA ' + sock.remoteAddress + ': \n' + data);
 		// Write the data back to the socket, the client will receive it as data from the server
-		sock.write('Input:\n' + data);
+		sock.write('\nInput:\n' + data);
 
-		// Turn data from the client into a string
-		var buf = new Buffer(4096);
-		var len = buf.write(data.toString());
-		var data_str = buf.toString('utf8', 0, len);
-		console.log("data string: ", data_str);
+		var prepareInput = function(data) { //Prepare input from Client data
+			// Turn data from the client into a string
+			var buf = new Buffer(4096);
+			var len = buf.write(data.toString());
+			var data_str = buf.toString('utf8', 0, len);
+			//split the data string on '\n'. It then becomes an array.
+			var data_array = data_str.split("\n");
+			return data_array;	
+		};
+		var gridInput = function() {
+			//take part of the data array and turn it into a string
+			var data_array = prepareInput(data);
+			var grid = data_array.slice(0, 1).toString();
+			return grid;
+		};
+		var positionInput = function() {
+			//take part of the data array and turn it into a string
+			var data_array = prepareInput(data);
+			var position = data_array.slice(1, 2).toString();
+			return position;
+		};
+		var instructionInput = function() {
+			//take part of the data array and turn it into a string
+			var data_array = prepareInput(data);
+			var instruction = data_array.slice(2).toString();
+			return instruction;
+		};
+		var Result = function() {
+			//instantiate grid and robot from the input and get output
+			var mars_grid = new initClass.Grid(gridInput());
+			var martian_robot = new initClass.Robot(mars_grid.size, positionInput(), instructionInput());
+			var result = martian_robot.getOutput();
+			return result;
+		}
 
-		//idea => split the data string on '\n'. It then becomes an array.
-		var data_array = data_str.split("\n");
-		console.log("data array: ", data_array);
-		//from the array I slice the parts I want and turn them into a string again.
-		var grid = data_array.slice(0, 1).toString();
-		console.log("grid: ", grid, typeof grid);
-		var position = data_array.slice(1, 2).toString();
-		console.log("position: ", position, typeof position);
-		var instruction = data_array.slice(2).toString();
-		console.log("instruction: ", instruction, typeof instruction);
-
-		// Instantiate a new grid and a new robot from the client message instruction
-		// var mars_grid = new initClass.Grid(data_str.substring(0,3));
-		// console.log("Mars grid: ", mars_grid.size);
-		// var martian_robot = new initClass.Robot(mars_grid.size, data_str.substring(4,11), data_str.substring(16));
-		// console.log("Grid size: ", martian_robot.grid, "Robot position: ", martian_robot.position, "Robot instruction: ", martian_robot.instruction);
-
-		var mars_grid = new initClass.Grid(grid);
-		console.log("Mars grid: ", mars_grid.size);
-		var martian_robot = new initClass.Robot(mars_grid.size, position, instruction);
-		console.log("Grid size: ", martian_robot.grid, "Robot position: ", martian_robot.position, "Robot instruction: ", martian_robot.instruction);
-
-		// Get the output, the robot final position on the grid
-		var result = martian_robot.getOutput();
-		// console.log("raw output: ", r);
-		// var r_int = parseInt(r.substring(0,5), 10);
-		// console.log("output w int: ", r_int);
-		// var result = r_int.toString() + r.substring(5);
-		sock.write('\nOutput:\n' + result);
+		sock.write('\nOutput:\n' + Result());
 	});
 	
 	// Add a 'close' event handler to this instance of socket

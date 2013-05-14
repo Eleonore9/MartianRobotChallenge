@@ -1,6 +1,24 @@
-Martian Robots
+*** --------------------- MARTIAN ROBOTS -------------------- ***
 
-The Problem 
+
+--------------------------- My solution ---------------------------
+
+robotMoves.js =>  Javascript functions for the different instructions 
+				  (Forward, Right, Left)
+Mars_robot.js =>  JS Grid Class and Robot Class. Note: Robot has methods to go to 
+                  the next position and get the output (= robot final position)
+test_client.js => Node.js TCP client that sends input data to the server
+test_server.js => Node.js TCP server that receives input data, instantiate a grid 
+                  and a robot, and display output (= robot final position)
+
+It works with Sample Input!!! =)
+- in a terminal tab: $ node test_server.js
+- in another terminal tab: $ node test_client.js
+
+-------------------------------------------------------------------
+
+
+---------------------------- The Problem --------------------------
 
 The surface of Mars can be modelled by a rectangular grid around which robots are able to move according to instructions provided from Earth.  You are to write a program that determines each sequence of robot positions and reports the final position of the robot. 
 
@@ -49,3 +67,5 @@ Sample Output
 1 1 E
 3 3 N LOST
 2 3 S
+
+
