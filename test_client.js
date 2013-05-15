@@ -14,6 +14,12 @@ client.connect(PORT, HOST, function() {
 	client.write('5 3\n3 2 N\nFRRFLLFFRRFLL'); //expected output "3 3 N LOST"
 	client.end();
 	client.write('5 3\n0 3 W\nLLFFFLFLFL'); //expected output "2 3 S"
+	client.end();
+	client.write('60 3\n3 2 N\nFRRFLLFFRRFLL'); //expect a message for coordinate > 50
+	client.end();
+	client.write('5 3\n3 2 N\nFRRFLLFFRRFFRRLLRFLFRFFFFRRRFLLLRRRFFLLLRFFLLRLLRFFRRFLLFFRRFFRRLLRFLFRFFFFRRRFLLLRRRFFLLLRFFLLRLLRF'); 
+	//expect a message for instruction > 100
+	
 	 
 });
 

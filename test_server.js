@@ -36,26 +36,43 @@ net.createServer(function(sock) {
 			//take part of the data array and turn it into a string
 			var data_array = prepareInput(data);
 			var grid = data_array.slice(0, 1).toString();
-			return grid;
+			var verif = grid.split(" ");
+			if(verif[0] <= 50 && verif[1] <= 50 ){
+				return grid;
+			}else{
+				console.log("50 is max for coordinates!");
+			}	
 		};
 		var positionInput = function() {
 			//take part of the data array and turn it into a string
 			var data_array = prepareInput(data);
 			var position = data_array.slice(1, 2).toString();
-			return position;
+			var verif = position.split(" ");
+			if(verif[0] <= 50 && verif[1] <= 50 ){
+				return position;
+			}else{
+				console.log("50 is max for coordinates!");
+			}			
 		};
 		var instructionInput = function() {
 			//take part of the data array and turn it into a string
 			var data_array = prepareInput(data);
 			var instruction = data_array.slice(2).toString();
-			return instruction;
+			if(instruction.length < 100) {
+				return instruction;
+			}else{
+				console.log("Instruction should be shorter than 100 characters!");
+			}
 		};
 		var Result = function() {
 			//instantiate grid and robot from the input and get output
-			var mars_grid = new initClass.Grid(gridInput());
-			var martian_robot = new initClass.Robot(mars_grid.size, positionInput(), instructionInput());
-			var result = martian_robot.getOutput();
-			return result;
+			if(gridInput() && positionInput() && instructionInput()){
+				var mars_grid = new initClass.Grid(gridInput());
+				var martian_robot = new initClass.Robot(mars_grid.size, positionInput(), instructionInput());
+				var result = martian_robot.getOutput();
+				return result;
+			}
+			
 		}
 
 		sock.write('\nOutput:\n' + Result());
